@@ -4,9 +4,11 @@ A data analysis streamlit app that can analyze the relationship between the vari
 
 ![2024-07-02_15-56-52](https://github.com/holowin/Quick-DA/assets/13112640/fb26fa3d-657b-4788-a7b6-5c7ff9889dcf)
 
+![pair-plot](https://github.com/holowin/Quick-DA/assets/13112640/cfac90d7-64bb-4aa1-a4be-8a314a2f6c29)
 
-![image](https://github.com/holowin/Quick-DA/assets/13112640/39dca5d9-4910-4a75-99f5-4a73b0c92eb2)
+![feature-importance](https://github.com/holowin/Quick-DA/assets/13112640/1b7a450b-e4aa-4bbc-8289-82d3f517f0c1)
 
-![image](https://github.com/holowin/Quick-DA/assets/13112640/1d75606a-9895-4323-aa07-7c94c77540d1)
 
-![image](https://github.com/holowin/Quick-DA/assets/13112640/ce242096-6ee1-4e07-9697-db006c520a93)
+![correlation](https://github.com/holowin/Quick-DA/assets/13112640/bdb8f8d4-dfd8-4877-8ad1-e1ed8b4eb907)
+
+
