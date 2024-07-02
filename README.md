@@ -1,5 +1,8 @@
 # Quick-DA
-A data analysis streamlit app that can analyze the relationship between the variables with the result and the importance of the variables.
+A data analysis streamlit app that can analyze the relationship between the variables, the importance of the variables, the relationship to the target resuls.
+
+
+![2024-07-02_15-56-52](https://github.com/holowin/Quick-DA/assets/13112640/fb26fa3d-657b-4788-a7b6-5c7ff9889dcf)
 
 
 ![image](https://github.com/holowin/Quick-DA/assets/13112640/39dca5d9-4910-4a75-99f5-4a73b0c92eb2)
