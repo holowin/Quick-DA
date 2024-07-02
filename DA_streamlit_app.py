@@ -45,17 +45,27 @@ def check_data_types(df, numeric_vars, discrete_vars):
 
 def plot_feature_importances(feature_importances, st):
     plt.figure(figsize=(10, 6))
-    sns.barplot(x=feature_importances.importance, y=feature_importances.index)
+    sns.barplot(x=feature_importances.importance, y=feature_importances.index, palette="deep")
     plt.title("Feature Importances")
     plt.xlabel("Importance")
     plt.ylabel("Features")
     st.pyplot(plt)
 
-def plot_relationship(df, result_column, numeric_vars, st):
+
+def plot_relationship(df, result_column, numeric_vars, hue_var, st):
     for var in numeric_vars:
-        sns.lmplot(x=var, y=result_column, data=df, aspect=2, line_kws={'color': 'red'})
+        sns.lmplot(x=var, y=result_column, data=df, hue=hue_var, aspect=2, palette="deep")
         plt.title(f"Relationship between {var} and {result_column}")
         st.pyplot(plt)
+
+def plot_pairplot(df, numeric_vars, discrete_var, st):
+    if discrete_var:
+        plt.figure(figsize=(10, 10))
+        sns.pairplot(df, vars=numeric_vars, hue=discrete_var, palette="deep")
+        # plt.title(f"Pair Plot of Numerical Variables with {discrete_var} as Hue")
+        st.pyplot(plt)
+    else:
+        st.error("No discrete variable selected for hue in pair plot.")        
 
 # Main app
 def main():
@@ -72,6 +82,7 @@ def main():
 
             numeric_vars = st.multiselect("Select numerical variables", variables)
             discrete_vars = [var for var in variables if var not in numeric_vars]
+            hue_var = st.selectbox("Select the discrete variable for hue in pair plot", discrete_vars)
 
             if not check_data_types(df, numeric_vars, discrete_vars):
                 return
@@ -80,11 +91,19 @@ def main():
             random_state = st.number_input("Enter the random state:", value=42)
 
             if st.button("Analyze"):
+                original_df = df.copy() 
+
                 if discrete_vars:
                     df, new_encoded_vars = one_hot_encode(df, discrete_vars)
                     selected_vars = numeric_vars + new_encoded_vars
                 else:
                     selected_vars = numeric_vars
+    
+                if hue_var not in df.columns and hue_var in original_df.columns:
+                    df[hue_var] = original_df[hue_var]
+
+                st.write("Pair plot of numerical variables")
+                plot_pairplot(df, numeric_vars, hue_var, st)  
 
                 # Prepare data for analysis
                 X = df[selected_vars]
@@ -99,7 +118,7 @@ def main():
                 plot_feature_importances(feature_importances, st)
 
                 if numeric_vars:
-                    plot_relationship(df, result_column, numeric_vars, st)
+                    plot_relationship(df, result_column, numeric_vars, hue_var, st)
 
 if __name__ == "__main__":
     main()
