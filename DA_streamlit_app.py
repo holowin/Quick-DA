@@ -97,14 +97,20 @@ def main():
                     df, new_encoded_vars = one_hot_encode(df, discrete_vars)
                     selected_vars = numeric_vars + new_encoded_vars
                 else:
+                    st.warning("No discrete variables found.")
                     selected_vars = numeric_vars
     
                 if hue_var not in df.columns and hue_var in original_df.columns:
                     df[hue_var] = original_df[hue_var]
 
                 st.write("Pair plot of numerical variables")
-                plot_pairplot(df, numeric_vars, hue_var, st)  
-
+                if hue_var:
+                    plot_pairplot(df, numeric_vars, hue_var, st)  
+                else:
+                    plt.figure(figsize=(10, 10))
+                    sns.pairplot(df, vars=numeric_vars, palette="deep")
+                    st.pyplot(plt)
+                
                 # Prepare data for analysis
                 X = df[selected_vars]
                 y = df[result_column]
@@ -118,7 +124,13 @@ def main():
                 plot_feature_importances(feature_importances, st)
 
                 if numeric_vars:
-                    plot_relationship(df, result_column, numeric_vars, hue_var, st)
+                    if hue_var:
+                        plot_relationship(df, result_column, numeric_vars, hue_var, st)
+                    else:
+                        for var in numeric_vars:
+                            sns.lmplot(x=var, y=result_column, data=df, aspect=2, palette="deep")
+                            plt.title(f"Relationship between {var} and {result_column}")
+                            st.pyplot(plt)
 
 if __name__ == "__main__":
     main()
